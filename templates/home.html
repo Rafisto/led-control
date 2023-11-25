@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Color Buttons</title>
+    <style>
+	html {
+	    font-family:monospace;
+	}
+        button {
+            border: 2px solid transparent;
+	    border-radius: 3px;
+            padding: 10px;
+            cursor: pointer;
+	    background-color: transparent;
+	}
+	button:hover {
+	    background-color: #484848;
+	}
+	button:active {
+	    background-color: white;
+	}
+	button, p {	
+	    text-transform:uppercase;
+	}
+
+        @media only screen and (max-width: 600px) {
+            .colorwrapper {
+                flex-direction: column;
+            }
+
+            button {
+                flex-grow: 1;
+            }
+
+            p {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body style="background-color:#121212;color:#eee">
+<p>Maintenance options</p>
+<div style="display:flex;gap:3px">
+    <button style="background-color: blue; color:white" onclick="sendMessage('on')">ON</button>
+    <button style="background-color: red; color:white" onclick="sendMessage('off')">OFF</button>
+</div>
+<p>Color options</p>
+<div class="colorwrapper" style="display:flex;gap:3px">
+    {% for alias, color in aliases.items() %}
+    <button style="border-color: rgb({{color}}); color: rgb({{color}})" onclick="sendMessage('{{ alias }}')">{{ alias
+        }}
+    </button>
+    <br>
+    {% endfor %}
+</div>
+<script>
+    function sendMessage(text) {
+    fetch('/control', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query: text })
+    })
+}
+
+</script>
+</body>
+</html>
+
