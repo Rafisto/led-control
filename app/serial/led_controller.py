@@ -26,4 +26,4 @@ class LedController(Serial):
         A function to set the color of the LEDs
         @param color: a string representing the color in the form of 'x;y;z'
         """
-        self.write(color, Validators.validate_color(color))
+        self.write(color, Validators.validate_color)

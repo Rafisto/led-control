@@ -7,7 +7,7 @@ api_blueprint = Blueprint('api', __name__)
 try:
     controller = LedController('/dev/ttyACM0', 9600)
 except ConnectionError as e:
-    api_blueprint.logger.info(f"Unable to connect to the desired device: {e}")
+    print(f"Unable to connect to the desired device: {e}")
 
 @api_blueprint.route('/')
 def home():
@@ -29,7 +29,8 @@ def translate():
             elif query == "off":
                 controller.off()
             else:
-                controller.set_color(ColorConverter.hex_to_rgb_str_semicolon(query))
+                color_str = ColorConverter.hex_to_rgb_str_semicolon(query)
+                controller.set_color(color_str)
             return jsonify({"message": "Successfully set"}), 200
         except Exception as e:
             return jsonify({"error": f"Internal server error. Message: {e}" }), 500
