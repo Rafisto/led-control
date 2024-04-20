@@ -39,10 +39,10 @@ class Control(object):
 
 if __name__ == "__main__":
     if len(sys.argv) == 1 or len(sys.argv) > 4:
-        print("Usage: python control.py colors")
-        print("Usage: python control.py <message>")
-        print("Usage: python control.py <color_alias>")
-        print("Usage: python control.py <r> <g> <b>")
+        print("Usage: python old_control.py colors")
+        print("Usage: python old_control.py <message>")
+        print("Usage: python old_control.py <color_alias>")
+        print("Usage: python old_control.py <r> <g> <b>")
         sys.exit(1)
     elif len(sys.argv) < 4:
         message = sys.argv[1]

@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
-from control import aliases
-from control import Control
+from old_control import aliases
+from old_control import Control
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 control = Control()
