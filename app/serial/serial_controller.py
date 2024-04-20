@@ -31,7 +31,7 @@ class Serial(object):
         """
         if message is None or len(message) == 0:
             raise ValueError(f"Message must not be empty.")
-        if e := validator(message):
+        if validator(message):
             self.device.write(message.encode())
         else:
-            raise ValueError(f"Message is not valid: {message} validator has thrown: {e}")
+            raise ValueError(f"Message is not valid: {message}, the validator has thrown.")

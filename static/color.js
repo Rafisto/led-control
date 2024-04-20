@@ -17,29 +17,39 @@ const receiveInput = () => {
 const switchState = async () => {
     if (color_checkbox.checked) {
         color_state = true;
-        document.getElementById("bgcolor").style.backgroundColor = color_picker.value;
+        document.getElementById("bgcolor").style.backgroundColor =
+            color_picker.value;
         document.getElementById("bgtext").innerHTML = color_picker.value;
         sendMessage("on");
-        await new Promise(r => setTimeout(() => r(), 2000));
+        await new Promise((r) => setTimeout(() => r(), 2000));
         sendMessage(color_picker.value);
     } else {
         color_state = false;
         document.getElementById("bgcolor").style.backgroundColor = "#242424";
         document.getElementById("bgtext").innerHTML = "OFF";
         sendMessage("off");
-        await new Promise(r => setTimeout(() => r(), 2000));
+        await new Promise((r) => setTimeout(() => r(), 2000));
     }
-}
+};
 
 color_picker.addEventListener("input", () => receiveInput());
 color_checkbox.addEventListener("change", () => switchState());
 
-const sendMessage = (text) => {
-    fetch("/control", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: text }),
-    });
-};
+const sendMessage = (() => {
+    let lastExecutionTime = 0;
+    const delay = 500;
+
+    return (text) => {
+        const currentTime = Date.now();
+        if (currentTime - lastExecutionTime >= delay) {
+            fetch("/control", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ query: text }),
+            });
+            lastExecutionTime = currentTime;
+        }
+    };
+})();
