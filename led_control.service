@@ -1,0 +1,14 @@
+[Unit]
+Description=LED Control Python Application
+After=network.target
+
+[Service]
+User=rafist0
+Group=rafist0
+WorkingDirectory=/home/rafist0/led-control
+ExecStart=/usr/bin/python3 /home/rafist0/led-control/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
